@@ -538,8 +538,9 @@ static void apply_volume(pa_sink *s) {
     /* So far every hal implementation doing volume control expects
      * both channels to have equal value, so we can just average the value
      * from all channels. */
-    val = pa_sw_volume_to_linear(pa_cvolume_avg(&r));
-
+//    val = pa_sw_volume_to_linear(pa_cvolume_avg(&r));
+    val = (float) pa_cvolume_avg(&r) / PA_VOLUME_NORM;
+    
     pa_log_debug("Set %s volume -> %f", s->name, val);
     pa_droid_hw_module_lock(u->hw_module);
     if (u->stream->output->stream->set_volume(u->stream->output->stream, val, val) < 0)
