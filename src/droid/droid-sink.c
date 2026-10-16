@@ -568,7 +568,8 @@ static void set_voice_volume(struct userdata *u, pa_sink_input *i) {
 
     pa_sink_input_get_volume(i, &vol, true);
 
-    val = pa_sw_volume_to_linear(pa_cvolume_avg(&vol));
+//    val = pa_sw_volume_to_linear(pa_cvolume_avg(&vol));
+    val = (float) pa_cvolume_avg(&vol) / PA_VOLUME_NORM;
     pa_log_debug("Set voice volume %f", val);
 
     pa_droid_hw_module_lock(u->hw_module);
