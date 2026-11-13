@@ -60,7 +60,16 @@ jobs:
               sed -n '1,20l' debian/changelog
               echo "=== dpkg-parsechangelog ==="
               dpkg-parsechangelog -l debian/changelog
-              releng-build-package
+              releng-build-package || {
+                echo "=== debian/changelog after failure ==="
+                wc -c debian/changelog
+                sed -n '1,30l' debian/changelog
+
+                echo "=== dpkg-parsechangelog ==="
+                dpkg-parsechangelog -l debian/changelog || true
+
+                exit 1
+              }      
             '
             
       - name: Show generated files
