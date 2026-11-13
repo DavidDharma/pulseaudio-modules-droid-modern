@@ -56,6 +56,10 @@ jobs:
               apt-cache policy gcc-aarch64-linux-gnu
               dpkg -l | grep aarch64
               ls /usr/bin/aarch64-linux-gnu-*
+              echo "=== debian/changelog after generation ==="
+              sed -n '1,20l' debian/changelog
+              echo "=== dpkg-parsechangelog ==="
+              dpkg-parsechangelog -l debian/changelog
               releng-build-package
             '
             
